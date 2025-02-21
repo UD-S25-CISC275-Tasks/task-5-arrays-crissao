@@ -6,11 +6,11 @@
  */
 export function bookEndList(numbers: number[]): number[] {
     let new_array: number[] = [];
-    const length: number = numbers.length
+    const length: number = numbers.length;
     if (length >= 2) {
         new_array.push(numbers[0]);
-        new_array.push(numbers[length-1]);
-    } else if (length === 1){
+        new_array.push(numbers[length - 1]);
+    } else if (length === 1) {
         new_array.push(numbers[0]);
         new_array.push(numbers[0]);
     }
@@ -22,7 +22,7 @@ export function bookEndList(numbers: number[]): number[] {
  * number has been tripled (multiplied by 3).
  */
 export function tripleNumbers(numbers: number[]): number[] {
-    const tripled = numbers.map((number: number): number => number*3);
+    const tripled = numbers.map((number: number): number => number * 3);
     return tripled;
 }
 
@@ -32,7 +32,7 @@ export function tripleNumbers(numbers: number[]): number[] {
  */
 export function stringsToIntegers(numbers: string[]): number[] {
     const new_numbers: number[] = numbers.map((num: string): number =>
-        isNaN(parseInt(num)) ? 0 : parseInt(num)
+        isNaN(parseInt(num)) ? 0 : parseInt(num),
     );
     return new_numbers;
 }
@@ -45,9 +45,11 @@ export function stringsToIntegers(numbers: string[]): number[] {
  */
 // Remember, you can write functions as lambdas too! They work exactly the same.
 export const removeDollars = (amounts: string[]): number[] => {
-    const new_strings: string[] = amounts.map((amount: string): string => amount[0] === "$" ? amount.slice(1) : amount)
+    const new_strings: string[] = amounts.map((amount: string): string =>
+        amount[0] === "$" ? amount.slice(1) : amount,
+    );
     const new_numbers: number[] = new_strings.map((num: string): number =>
-        isNaN(parseInt(num)) ? 0 : parseInt(num)
+        isNaN(parseInt(num)) ? 0 : parseInt(num),
     );
     return new_numbers;
 };
@@ -58,8 +60,15 @@ export const removeDollars = (amounts: string[]): number[] => {
  * in question marks ("?").
  */
 export const shoutIfExclaiming = (messages: string[]): string[] => {
-    const new_messages: string[] = messages.filter((message: string): boolean => message[message.length-1] !== "?")
-    const new_messages2: string[] = new_messages.map((message: string): string => message[message.length-1] === "!" ? message.toUpperCase() : message)
+    const new_messages: string[] = messages.filter(
+        (message: string): boolean => message[message.length - 1] !== "?",
+    );
+    const new_messages2: string[] = new_messages.map(
+        (message: string): string =>
+            message[message.length - 1] === "!" ?
+                message.toUpperCase()
+            :   message,
+    );
     return new_messages2;
 };
 
@@ -68,7 +77,9 @@ export const shoutIfExclaiming = (messages: string[]): string[] => {
  * 4 letters long.
  */
 export function countShortWords(words: string[]): number {
-    const shorties: string[] = words.filter((word: string): boolean => word.length < 4);
+    const shorties: string[] = words.filter(
+        (word: string): boolean => word.length < 4,
+    );
     return shorties.length;
 }
 
@@ -79,7 +90,8 @@ export function countShortWords(words: string[]): number {
  */
 export function allRGB(colors: string[]): boolean {
     const new_colors: string[] = colors.filter(
-        (word: string): boolean => word === "red" || word === "green" || word === "blue",
+        (word: string): boolean =>
+            word === "red" || word === "green" || word === "blue",
     );
     if (colors.length === new_colors.length) {
         return true;
@@ -95,9 +107,12 @@ export function allRGB(colors: string[]): boolean {
  * And the array [] would become "0=0".
  */
 export function makeMath(addends: number[]): string {
-    const sum: number = addends.reduce((sum: number, addend: number): number => sum + addend, 0)
+    const sum: number = addends.reduce(
+        (sum: number, addend: number): number => sum + addend,
+        0,
+    );
     let math: string = addends.join("+");
-    if (addends.length === 0){
+    if (addends.length === 0) {
         math = "0";
     }
     return `${sum}=${math}`;
@@ -113,5 +128,22 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    return [];
+    const first_negative: number = values.findIndex(
+        (value: number): boolean => value < 0,
+    );
+    if (first_negative !== -1) {
+        const spliced: number[] = values.slice(0, first_negative);
+        const sum = spliced.reduce(
+            (sum: number, num: number): number => sum + num,
+            0,
+        );
+        const summed: number[] = [...values];
+        summed.splice(first_negative + 1, 0, sum);
+        return summed;
+    }
+    const sum = values.reduce(
+        (sum: number, num: number): number => sum + num,
+        0,
+    );
+    return [...values, sum];
 }
